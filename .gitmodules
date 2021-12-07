@@ -1,3 +1,4 @@
 [submodule "multimon-ng"]
 	path = multimon-ng
 	url = https://github.com/tux-linux/multimon-ng
+	branch = quiet-pocsag
