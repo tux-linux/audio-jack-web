@@ -2,3 +2,9 @@
 	path = multimon-ng
 	url = https://github.com/tux-linux/multimon-ng
 	branch = quiet-pocsag
+[submodule "cwwav"]
+	path = cwwav
+	url = https://github.com/oyvholm/cwwav
+[submodule "pagerenc"]
+	path = pagerenc
+	url = https://github.com/faithanalog/pagerenc
