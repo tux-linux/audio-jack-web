@@ -20,7 +20,7 @@ while read -r -n 512 SPLIT_SOURCE; do
     iterations_total=$((iterations_total+1))
 done <<< "${SEND_SOURCE}"
 echo "${iterations_total} iterations."
-echo "POCSAG2400:1:\"${iterations_total}\"" | ./pagerenc | ffmpeg -hide_banner -loglevel error -f s16le -ar 22050 -ac 1 -i - -ar 44100 "${BASEPATH}/iterations.wav" && play "${BASEPATH}/iterations.wav" || error_exit "Failed sending total iterations to client" 2
+echo "POCSAG2400:1:\"==IT=${iterations_total}\"" | ./pagerenc | ffmpeg -hide_banner -loglevel error -f s16le -ar 22050 -ac 1 -i - -ar 44100 "${BASEPATH}/iterations.wav" && play "${BASEPATH}/iterations.wav" || error_exit "Failed sending total iterations to client" 2
 
 current_iteration=1
 while read -r -n 512 SPLIT_SOURCE; do
