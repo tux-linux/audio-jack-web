@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 error_exit() {
     [ -z "${1}" ] && CAUSE="Unknown error"
@@ -7,10 +7,10 @@ error_exit() {
     exit ${EXITCODE}
 }
 
+[ -z "${1}" ] && error_exit "Please specify a request URL"
 RAND_TMP_SUFFIX=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 10)
 BASEPATH="/tmp/audio-jack-web-${RAND_TMP_SUFFIX}"
 mkdir -p "${BASEPATH}"
-[ -z "${1}" ] && error_exit "Please specify a request URL"
 BASE_URL="${1}"
 ENCODED_OUTPUT=$(echo "${BASE_URL}" | base32 | tr -d "\n")
 echo "request.sh: Sending string '${ENCODED_OUTPUT}'"
