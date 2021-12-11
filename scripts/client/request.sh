@@ -12,9 +12,9 @@ RAND_TMP_SUFFIX=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 10)
 BASEPATH="/tmp/audio-jack-web-${RAND_TMP_SUFFIX}"
 mkdir -p "${BASEPATH}"
 BASE_URL="${1}"
-ENCODED_OUTPUT=$(echo "${BASE_URL} ++END++" | base32 | tr -d "\n")
+ENCODED_OUTPUT=$(echo "${BASE_URL}" | base32 | tr -d "\n")
 echo "request.sh: Sending string '${ENCODED_OUTPUT}'"
-echo "${ENCODED_OUTPUT}" | ./cwwav -w 35 --output "${BASEPATH}/request.wav" || error_exit "Failed converting base32 to wav file"
+echo "${ENCODED_OUTPUT} ++END++" | ./cwwav -w 35 --output "${BASEPATH}/request.wav" || error_exit "Failed converting base32 to wav file"
 play "${BASEPATH}/request.wav" || error_exit "Failed playing audio. Check if sox is installed"
 rm -rf "${BASEPATH}"
 
