@@ -6,6 +6,7 @@
 #include <QTextStream>
 #include <QGuiApplication>
 #include <QScreen>
+#include <QTimer>
 
 namespace Ui {
 class loadProgressDialog;

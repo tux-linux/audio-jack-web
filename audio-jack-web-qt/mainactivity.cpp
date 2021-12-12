@@ -71,7 +71,6 @@ QString mainActivity::makeRequest(QString requestUrl) {
     while(true) {
         if(QFile::exists("send_done")) {
             qDebug() << "Done receiving data from server";
-            QFile::remove("send_done");
             break;
         }
     }

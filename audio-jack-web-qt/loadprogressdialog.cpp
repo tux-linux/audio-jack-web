@@ -22,6 +22,16 @@ loadProgressDialog::loadProgressDialog(QWidget *parent) :
     }
     int iterationsNumber = iterations.toInt();
     ui->progressLabel->setText("Loading " + iterations + " chunks");
+
+    QTimer *t = new QTimer(this);
+    t->setInterval(10);
+    connect(t, &QTimer::timeout, [&]() {
+       if(QFile::exists("send_done")) {
+           QFile::remove("send_done");
+           qApp->quit();
+       }
+    } );
+    t->start();
 }
 
 loadProgressDialog::~loadProgressDialog()
