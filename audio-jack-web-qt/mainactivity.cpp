@@ -8,8 +8,15 @@ mainActivity::mainActivity(QWidget *parent)
     , ui(new Ui::mainActivity)
 {
     ui->setupUi(this);
+
+    // Cleanup
+    QFile::remove("../scripts/client/iterations_total");
+    QFile::remove("../scripts/client/input");
+    QFile::remove("../scripts/client/decoded");
+
     connectUpdateTitleDone = false;
     ui->searchLineEdit->setFocus();
+
     view = new QWebEngineView(this);
     connect(view, SIGNAL(urlChanged(QUrl)), SLOT(interceptUrl(QUrl)));
     ui->gridLayout->addWidget(view);
@@ -60,6 +67,7 @@ QString mainActivity::makeRequest(QString requestUrl) {
     QDir::setCurrent("../scripts/client");
     QProcess::execute("request.sh", QStringList() << requestUrl);
     qDebug() << "Receiving data from server";
+    QProcess::startDetached("../../audio-jack-web-qt/audio-jack-web-qt", QStringList() << "load-progress");
 
     while(true) {
         if(QFile::exists("send_done")) {
