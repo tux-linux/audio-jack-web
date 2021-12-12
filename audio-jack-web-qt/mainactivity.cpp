@@ -8,6 +8,8 @@ mainActivity::mainActivity(QWidget *parent)
     , ui(new Ui::mainActivity)
 {
     ui->setupUi(this);
+    connectUpdateTitleDone = false;
+    ui->searchLineEdit->setFocus();
     view = new QWebEngineView(this);
     connect(view, SIGNAL(urlChanged(QUrl)), SLOT(interceptUrl(QUrl)));
     ui->gridLayout->addWidget(view);
@@ -15,6 +17,7 @@ mainActivity::mainActivity(QWidget *parent)
 
     QString welcomeHtml = "<!DOCTYPE html><html><body><center><b>audio-jack-web</b><br/>Browse the Internet over two 3.5mm audio cables!<br/><br/><i>Type an URL into the address bar to access the Web.</center></body></html>";
     view->setHtml(welcomeHtml);
+    this->setWindowTitle("audio-jack-web browser");
 }
 
 mainActivity::~mainActivity()
@@ -25,14 +28,23 @@ mainActivity::~mainActivity()
 
 void mainActivity::on_pushButton_clicked()
 {
+    if(!connectUpdateTitleDone) {
+        connect(view, SIGNAL(titleChanged(QString)), SLOT(updateTitle(QString)));
+        connectUpdateTitleDone = true;
+    }
     loadNewUrl(ui->lineEdit->text());
 }
 
 void mainActivity::loadNewUrl(QString requestUrl) {
-    ui->statusLabel->setText("Sending request to server");
-    QString webpage = makeRequest(requestUrl);
-    view->setHtml(webpage);
-    ui->statusLabel->setText("Done loading webpage " + requestUrl);
+    if(!requestUrl.isEmpty()) {
+        ui->statusLabel->setText("Sending request to server");
+        QString webpage = makeRequest(requestUrl);
+        view->setHtml(webpage);
+        ui->statusLabel->setText("Done loading webpage " + requestUrl);
+    }
+    else {
+        QMessageBox::critical(this, tr("No URL to request"), tr("Please type in an URL into the address bar."));
+    }
 }
 
 QString mainActivity::makeRequest(QString requestUrl) {
@@ -95,4 +107,26 @@ void mainActivity::interceptUrl(QUrl url) {
         loadNewUrl(urlString);
         ui->lineEdit->setText(urlString);
     }
+}
+
+void mainActivity::on_searchBtn_clicked()
+{
+    if(!connectUpdateTitleDone) {
+        connect(view, SIGNAL(titleChanged(QString)), SLOT(updateTitle(QString)));
+        connectUpdateTitleDone = true;
+    }
+    loadSearchResults(ui->searchLineEdit->text());
+}
+
+void mainActivity::loadSearchResults(QString searchTerm) {
+    if(!searchTerm.isEmpty()) {
+        loadNewUrl("http://frogfind.com/?q=" + searchTerm);
+    }
+    else {
+        QMessageBox::critical(this, tr("Search is empty"), tr("Please specify a search term in the search bar."));
+    }
+}
+
+void mainActivity::updateTitle(QString title) {
+    this->setWindowTitle(title);
 }

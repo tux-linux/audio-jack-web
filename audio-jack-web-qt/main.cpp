@@ -5,7 +5,12 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    mainActivity w;
-    w.showMaximized();
-    return a.exec();
+    if(QCoreApplication::arguments().contains("load-progress")) {
+        exit(0);
+    }
+    else {
+        mainActivity w;
+        w.showMaximized();
+        return a.exec();
+    }
 }

@@ -10,13 +10,16 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainactivity.cpp
+    mainactivity.cpp \
+    progressdialog.cpp
 
 HEADERS += \
-    mainactivity.h
+    mainactivity.h \
+    progressdialog.h
 
 FORMS += \
-    mainactivity.ui
+    mainactivity.ui \
+    progressdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
