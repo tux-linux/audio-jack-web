@@ -9,6 +9,7 @@ mainActivity::mainActivity(QWidget *parent)
 {
     ui->setupUi(this);
     view = new QWebEngineView(this);
+    connect(view, SIGNAL(urlChanged(QUrl)), SLOT(interceptUrl(QUrl)));
     ui->gridLayout->addWidget(view);
     view->show();
 
@@ -31,10 +32,12 @@ void mainActivity::loadNewUrl(QString requestUrl) {
     ui->statusLabel->setText("Sending request to server");
     QString webpage = makeRequest(requestUrl);
     view->setHtml(webpage);
-    ui->statusLabel->setText("Done loading webpage");
+    ui->statusLabel->setText("Done loading webpage " + requestUrl);
 }
 
 QString mainActivity::makeRequest(QString requestUrl) {
+    qDebug() << "Making request for" << requestUrl;
+
     QString multimonProg = "bash";
     QStringList multimonArgs;
     multimonArgs << "-c" << "../multimon-ng/multimon-ng -q -a POCSAG2400 > ../scripts/client/input";
@@ -78,5 +81,18 @@ QString mainActivity::readFile(QString file) {
     }
     else {
         return NULL;
+    }
+}
+
+void mainActivity::interceptUrl(QUrl url) {
+    QString urlString = url.toString();
+    if(urlString.contains("data:text/html")) {
+        // This is a local page received from server, do nothing
+        ;
+    }
+    else {
+        // Intercept web request
+        loadNewUrl(urlString);
+        ui->lineEdit->setText(urlString);
     }
 }

@@ -24,6 +24,7 @@ private slots:
 protected slots:
     void loadNewUrl(QString requestUrl);
     QString makeRequest(QString requestUrl);
+    void interceptUrl(QUrl url);
 
 private:
     Ui::mainActivity *ui;
