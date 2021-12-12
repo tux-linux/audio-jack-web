@@ -23,7 +23,7 @@ private slots:
 
 protected slots:
     void loadNewUrl(QString requestUrl);
-    void makeRequest(QString requestUrl);
+    QString makeRequest(QString requestUrl);
 
 private:
     Ui::mainActivity *ui;

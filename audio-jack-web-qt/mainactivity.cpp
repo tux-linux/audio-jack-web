@@ -25,27 +25,36 @@ void mainActivity::on_pushButton_clicked()
 }
 
 void mainActivity::loadNewUrl(QString requestUrl) {
-    makeRequest(requestUrl);
+    QString webpage = makeRequest(requestUrl);
+    view->setHtml(webpage);
 }
 
-void mainActivity::makeRequest(QString requestUrl) {
-    QString prog ("../multimon-ng/multimon-ng");
-    QStringList args;
-    args << "-a" << "POCSAG2400" << "-q";
-    QProcess *proc = new QProcess();
-    proc->start(prog, args);
-    QString receivedWebpage = proc->readAllStandardOutput();
+QString mainActivity::makeRequest(QString requestUrl) {
+    QString multimonProg = "bash";
+    QStringList multimonArgs;
+    multimonArgs << "-c" << "../multimon-ng/multimon-ng -q -a POCSAG2400 > ../scripts/client/input";
+    QProcess * proc = new QProcess();
+    proc->start(multimonProg, multimonArgs);
 
+    QFile::remove("../scripts/client/send_done");
     QDir::setCurrent("../scripts/client");
     QProcess::execute("request.sh", QStringList() << requestUrl);
 
     while(true) {
         if(QFile::exists("send_done")) {
+            QFile::remove("send_done");
             break;
         }
     }
 
-    QDir::setCurrent("../..");
+    QProcess::execute("killall", QStringList() << "multimon-ng");
+    QProcess::execute("bash", QStringList() << "-c" << "cat input | base64 -d | xz -d > decoded.html");
+    QFile::remove("input");
+    QString decodedWebpage = readFile("decoded.html");
+    QFile::remove("decoded.html");
+    QDir::setCurrent("../../audio-jack-web-qt");
+
+    return decodedWebpage;
 }
 
 QString mainActivity::readFile(QString file) {
