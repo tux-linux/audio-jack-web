@@ -44,11 +44,11 @@ QString mainActivity::makeRequest(QString requestUrl) {
     QFile::remove("../scripts/client/send_done");
     QDir::setCurrent("../scripts/client");
     QProcess::execute("request.sh", QStringList() << requestUrl);
-
-    ui->statusLabel->setText("Receiving data, please wait");
+    qDebug() << "Receiving data from server";
 
     while(true) {
         if(QFile::exists("send_done")) {
+            qDebug() << "Done receiving data from server";
             QFile::remove("send_done");
             break;
         }
@@ -60,6 +60,8 @@ QString mainActivity::makeRequest(QString requestUrl) {
     QString decodedWebpage = readFile("decoded.html");
     QFile::remove("decoded.html");
     QDir::setCurrent("../../audio-jack-web-qt");
+
+    proc->deleteLater();
 
     return decodedWebpage;
 }
