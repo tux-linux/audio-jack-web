@@ -1,28 +1,35 @@
-#include "progressdialog.h"
-#include "ui_progressdialog.h"
+#include "loadprogressdialog.h"
+#include "ui_loadprogressdialog.h"
 
-progressDialog::progressDialog(QWidget *parent) :
+loadProgressDialog::loadProgressDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::progressDialog)
+    ui(new Ui::loadProgressDialog)
 {
     ui->setupUi(this);
+
+    QRect screenGeometry = QGuiApplication::screens()[0]->geometry();
+    int x = (screenGeometry.width() - this->width()) / 2;
+    int y = (screenGeometry.height() - this->height()) / 2;
+    this->move(x, y);
+
     ui->progressLabel->setText("Initializing");
     QString iterations;
     while(true) {
         if(QFile::exists("../scripts/client/iterations_total")) {
             iterations = readFile("../scripts/client/iterations_total");
+            break;
         }
     }
     int iterationsNumber = iterations.toInt();
     ui->progressLabel->setText("Loading " + iterations + " chunks");
 }
 
-progressDialog::~progressDialog()
+loadProgressDialog::~loadProgressDialog()
 {
     delete ui;
 }
 
-QString progressDialog::readFile(QString file) {
+QString loadProgressDialog::readFile(QString file) {
     if(QFile::exists(file)) {
         QString content;
         QFile fileToRead(file);

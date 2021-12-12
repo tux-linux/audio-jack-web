@@ -8,7 +8,6 @@ mainActivity::mainActivity(QWidget *parent)
     , ui(new Ui::mainActivity)
 {
     ui->setupUi(this);
-
     // Cleanup
     QFile::remove("../scripts/client/iterations_total");
     QFile::remove("../scripts/client/input");

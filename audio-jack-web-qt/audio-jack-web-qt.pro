@@ -9,17 +9,17 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    loadprogressdialog.cpp \
     main.cpp \
-    mainactivity.cpp \
-    progressdialog.cpp
+    mainactivity.cpp
 
 HEADERS += \
-    mainactivity.h \
-    progressdialog.h
+    loadprogressdialog.h \
+    mainactivity.h
 
 FORMS += \
-    mainactivity.ui \
-    progressdialog.ui
+    loadprogressdialog.ui \
+    mainactivity.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
