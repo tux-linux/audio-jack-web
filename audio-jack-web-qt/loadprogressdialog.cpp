@@ -15,8 +15,8 @@ loadProgressDialog::loadProgressDialog(QWidget *parent) :
     ui->progressLabel->setText("Initializing");
     QString iterations;
     while(true) {
-        if(QFile::exists("../scripts/client/iterations_total")) {
-            iterations = readFile("../scripts/client/iterations_total");
+        if(QFile::exists("iterations_total")) {
+            iterations = readFile("iterations_total");
             break;
         }
     }
