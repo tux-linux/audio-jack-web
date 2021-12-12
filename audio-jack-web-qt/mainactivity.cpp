@@ -11,6 +11,9 @@ mainActivity::mainActivity(QWidget *parent)
     view = new QWebEngineView(this);
     ui->gridLayout->addWidget(view);
     view->show();
+
+    QString welcomeHtml = "<!DOCTYPE html><html><body><center><b>audio-jack-web</b><br/>Browse the Internet over two 3.5mm audio cables!<br/><br/><i>Type an URL into the address bar to access the Web.</center></body></html>";
+    view->setHtml(welcomeHtml);
 }
 
 mainActivity::~mainActivity()
@@ -25,8 +28,10 @@ void mainActivity::on_pushButton_clicked()
 }
 
 void mainActivity::loadNewUrl(QString requestUrl) {
+    ui->statusLabel->setText("Sending request to server");
     QString webpage = makeRequest(requestUrl);
     view->setHtml(webpage);
+    ui->statusLabel->setText("Done loading webpage");
 }
 
 QString mainActivity::makeRequest(QString requestUrl) {
@@ -39,6 +44,8 @@ QString mainActivity::makeRequest(QString requestUrl) {
     QFile::remove("../scripts/client/send_done");
     QDir::setCurrent("../scripts/client");
     QProcess::execute("request.sh", QStringList() << requestUrl);
+
+    ui->statusLabel->setText("Receiving data, please wait");
 
     while(true) {
         if(QFile::exists("send_done")) {

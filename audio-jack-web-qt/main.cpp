@@ -6,6 +6,6 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     mainActivity w;
-    w.show();
+    w.showMaximized();
     return a.exec();
 }
