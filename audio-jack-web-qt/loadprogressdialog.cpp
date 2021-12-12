@@ -6,6 +6,7 @@ loadProgressDialog::loadProgressDialog(QWidget *parent) :
     ui(new Ui::loadProgressDialog)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Loading progress");
 
     QRect screenGeometry = QGuiApplication::screens()[0]->geometry();
     int x = (screenGeometry.width() - this->width()) / 2;
@@ -13,15 +14,16 @@ loadProgressDialog::loadProgressDialog(QWidget *parent) :
     this->move(x, y);
 
     ui->progressLabel->setText("Initializing");
-    QString iterations;
+    QString header;
     while(true) {
         if(QFile::exists("iterations_total")) {
-            iterations = readFile("iterations_total");
+            header = readFile("iterations_total");
             break;
         }
     }
-    int iterationsNumber = iterations.toInt();
-    ui->progressLabel->setText("Loading " + iterations + " chunks");
+    QStringList splitHeader = header.split("-");
+    int iterationsNumber = splitHeader[0].toInt();
+    ui->progressLabel->setText("Loading " + splitHeader[0] + " chunks");
 
     QTimer *t = new QTimer(this);
     t->setInterval(10);

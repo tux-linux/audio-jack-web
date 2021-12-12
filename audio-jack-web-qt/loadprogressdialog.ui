@@ -31,6 +31,9 @@
        <property name="value">
         <number>24</number>
        </property>
+       <property name="textVisible">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item row="2" column="0">
