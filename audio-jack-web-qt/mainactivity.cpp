@@ -8,10 +8,6 @@ mainActivity::mainActivity(QWidget *parent)
     , ui(new Ui::mainActivity)
 {
     ui->setupUi(this);
-    // Cleanup
-    QFile::remove("../scripts/client/iterations_total");
-    QFile::remove("../scripts/client/input");
-    QFile::remove("../scripts/client/decoded");
 
     connectUpdateTitleDone = false;
     ui->searchLineEdit->setFocus();
@@ -55,6 +51,11 @@ void mainActivity::loadNewUrl(QString requestUrl) {
 
 QString mainActivity::makeRequest(QString requestUrl) {
     qDebug() << "Making request for" << requestUrl;
+
+    // Cleanup
+    QFile::remove("../scripts/client/iterations_total");
+    QFile::remove("../scripts/client/input");
+    QFile::remove("../scripts/client/decoded");
 
     QString multimonProg = "bash";
     QStringList multimonArgs;

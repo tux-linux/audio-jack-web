@@ -22,16 +22,21 @@ loadProgressDialog::loadProgressDialog(QWidget *parent) :
         }
     }
     QStringList splitHeader = header.split("-");
-    int iterationsNumber = splitHeader[0].toInt();
-    ui->progressLabel->setText("Loading " + splitHeader[0] + " chunks");
+    inputLength = splitHeader[1].toInt();
+    ui->progressLabel->setText("Loading " + splitHeader[0] + " chunks, please wait...");
 
     QTimer *t = new QTimer(this);
     t->setInterval(10);
     connect(t, &QTimer::timeout, [&]() {
-       if(QFile::exists("send_done")) {
-           QFile::remove("send_done");
-           qApp->quit();
-       }
+        QFile inputFile("input");
+        int inputFileSize = inputFile.size();
+        float progressPercentage = inputFileSize * 100 / inputLength;
+        ui->loadingLabel->setText(QString::number(progressPercentage) + " %");
+        ui->progressBar->setValue(progressPercentage);
+        if(QFile::exists("send_done")) {
+            QFile::remove("send_done");
+            qApp->quit();
+        }
     } );
     t->start();
 }

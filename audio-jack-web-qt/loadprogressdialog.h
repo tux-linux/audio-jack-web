@@ -7,6 +7,7 @@
 #include <QGuiApplication>
 #include <QScreen>
 #include <QTimer>
+#include <QDebug>
 
 namespace Ui {
 class loadProgressDialog;
@@ -20,6 +21,7 @@ public:
     explicit loadProgressDialog(QWidget *parent = nullptr);
     ~loadProgressDialog();
     QString readFile(QString file);
+    int inputLength;
 
 private:
     Ui::loadProgressDialog *ui;
