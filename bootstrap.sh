@@ -9,7 +9,7 @@ cd ..
 
 cd pagerenc/
 stack setup
-stack build --local-bin-path . --copy-bins
+stack build --local-bin-path ../scripts/server --copy-bins
 cd ..
 
 cd multimon-ng/
