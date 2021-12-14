@@ -55,4 +55,7 @@ Play around with audio configuration & volume in `pavucontrol`, for me it works 
 **Important**: this app must *always* be run from its build directory, otherwise it won't work properly.
 
 #### Have fun!
-Enter something to search with [FrogFind](http://frogfind.com), or type an URL into the address bar, then strike Return. Now, wait. Something should be happening between the two computers and soon enough, you'll see a webpage appearing on your client's browser.
+Enter something to search with [FrogFind](http://frogfind.com), or type an URL into the address bar, then strike Return. Now, wait. Something should be happening between the two computers and soon enough (yeah... it's slow ;p), you'll see a webpage appearing on your client's browser.
+![FrogFind demo](https://github.com/tux-linux/audio-jack-web/raw/main/images/demo/demo_1.png)
+![GitHub demo](https://github.com/tux-linux/audio-jack-web/raw/main/images/demo/demo_2.png)
+**Note**: if the first webpage request doesn't transmit well (there might be strange characters in the URL on the server's end due to some corruption), try again and it should work better.
