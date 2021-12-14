@@ -9,6 +9,9 @@ mainActivity::mainActivity(QWidget *parent)
 {
     ui->setupUi(this);
 
+    connect(ui->lineEdit, SIGNAL(returnPressed()), SLOT(on_pushButton_clicked()));
+    connect(ui->searchLineEdit, SIGNAL(returnPressed()), SLOT(on_searchBtn_clicked()));
+
     connectUpdateTitleDone = false;
     ui->searchLineEdit->setFocus();
 
@@ -39,10 +42,12 @@ void mainActivity::on_pushButton_clicked()
 
 void mainActivity::loadNewUrl(QString requestUrl) {
     if(!requestUrl.isEmpty()) {
+        QApplication::setOverrideCursor(Qt::WaitCursor);
         ui->statusLabel->setText("Sending request to server");
         QString webpage = makeRequest(requestUrl);
         view->setHtml(webpage);
-        ui->statusLabel->setText("Done loading webpage " + requestUrl);
+        QApplication::restoreOverrideCursor();
+        ui->statusLabel->setText("Done loading webpage '" + requestUrl + "'");
     }
     else {
         QMessageBox::critical(this, tr("No URL to request"), tr("Please type in an URL into the address bar."));
