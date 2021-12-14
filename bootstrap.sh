@@ -13,6 +13,7 @@ stack build --local-bin-path ../scripts/server --copy-bins
 cd ..
 
 cd multimon-ng/
+git switch quiet-pocsag
 cmake .
 make
 cd ..
