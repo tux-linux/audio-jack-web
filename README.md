@@ -59,3 +59,6 @@ Enter something to search with [FrogFind](http://frogfind.com), or type an URL i
 ![FrogFind demo](https://github.com/tux-linux/audio-jack-web/raw/main/images/demo/demo_1.png)
 ![GitHub demo](https://github.com/tux-linux/audio-jack-web/raw/main/images/demo/demo_2.png)
 **Note**: if the first webpage request doesn't transmit well (there might be strange characters in the URL on the server's end due to some corruption), try again and it should work better.
+
+## Licensing
+All the files in this project are licensed under the GNU General Public License version 3.0, unless otherwise specified (e.g. in submodules).
